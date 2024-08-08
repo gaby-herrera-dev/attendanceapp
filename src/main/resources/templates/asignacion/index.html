@@ -1,0 +1,71 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+
+<div layout:fragment="content">
+    <!--mostrar mensaje de cofirmacion en caso de exito-->
+    <div th:if="${msg != null}">
+        <script>
+            Swal.fire({
+            title: "Confirmacion",
+            text: '[[${msg}]]',
+            icon: "success"
+            });
+        </script>
+    </div>
+
+    <!-- mostrar mensaje de error en caso de error -->
+
+    <div th:if="${error != null}">
+        <script>
+            swal.fire({
+            title: "Error",
+           text: '[[${error}]]',
+            icon: "error"
+             });
+        </script>
+    </div>
+
+
+    <h1>Listado de asignacion Docente-Grupos</h1>
+    <a th:href="@{/asignaciones/create}" class="btn btn-outline-primary">Nueva Asignacion</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Anio</th>
+            <th>Ciclo</th>
+            <th>Docente</th>
+            <th>Escuela</th>
+            <th>Grupo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${asignaciones}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.anio}"></td>
+            <td th:text="${item.ciclo}"></td>
+            <td th:text="${item.docente.nombre}"></td>
+            <td th:text="${item.docente.escuela}"></td>
+            <td th:text="${item.grupo.nombre}"></td>
+            <td>
+                <a th:href="@{/asignaciones/details/{id} (id = ${item.id}) }" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/asignaciones/edit/{id} (id = ${item.id}) }" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/asignaciones/remove/{id} (id = ${item.id}) }" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navegation example">
+        <ul class="pagination">
+            <li class="page-item" th:each="pageNumber : ${pageNumber}">
+                <a href="page-link" th:href="@{|/asignaciones?page=${(pageNumber)|}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
