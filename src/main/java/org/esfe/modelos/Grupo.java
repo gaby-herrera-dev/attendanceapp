@@ -2,7 +2,6 @@ package org.esfe.modelos;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.annotations.NotFound;
 
 @Entity
 @Table(name = "grupos")
